@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.B JACK'S TAXI SERVICE | Bound Brook, NJ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --taxi-yellow: #FFD700;
+            --carbon-black: #0A0A0A;
+            --metallic-gray: #1E1E1E;
+            --electric-blue: #00F5FF;
+            --neon-glow: rgba(255, 215, 0, 0.3);
+            --blue-glow: rgba(0, 245, 255, 0.2);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--carbon-black);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .digital-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        /* Header glow effect */
+        .header-glow {
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.1);
+        }
+        
+        /* Moving line animation */
+        .moving-line {
+            position: absolute;
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, var(--electric-blue), transparent);
+            animation: moveLine 8s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes moveLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Button animations */
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+        
+        /* Hover effects */
+        .hover-glow:hover {
+            box-shadow: 0 0 15px var(--neon-glow);
+            transform: translateY(-2px);
+        }
+        
+        .hover-blue-glow:hover {
+            box-shadow: 0 0 15px var(--blue-glow);
+        }
+        
+        /* Card styling */
+        .service-card {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            border-color: var(--electric-blue);
+            background: rgba(30, 30, 30, 0.8);
+            box-shadow: 0 10px 25px rgba(0, 245, 255, 0.1);
+        }
+        
+        /* Testimonial cards */
+        .testimonial-card {
+            background: linear-gradient(145deg, #1A1A1A, #252525);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 215, 0, 0) 0%,
+                rgba(255, 215, 0, 0.03) 50%,
+                rgba(255, 215, 0, 0) 100%
+            );
+            transform: rotate(30deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .testimonial-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* Form styling */
+        .form-input {
+            background: rgba(20, 20, 20, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 10px var(--blue-glow);
+            background: rgba(20, 20, 20, 0.9);
+        }
+        
+        /* Logo effect */
+        .logo-reflect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-reflect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(30deg);
+            animation: reflect 5s infinite;
+        }
+        
+        @keyframes reflect {
+            0% { left: -60%; }
+            50% { left: 120%; }
+            100% { left: -60%; }
+        }
+        
+        /* Language toggle */
+        .lang-toggle {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .lang-btn {
+            padding: 2px 10px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active {
+            background: var(--taxi-yellow);
+            color: black;
+            font-weight: bold;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-text {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Language content */
+        .lang-content {
+            display: none;
+        }
+        
+        .lang-content.active {
+            display: block;
+        }
+        
+        /* Fixed button text width */
+        .btn-text-fixed {
+            display: inline-block;
+            width: 85px; /* Ajustado para acomodar "BOOK NOW" y "RESERVAR" */
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black bg-opacity-90 border-b border-gray-800 header-glow">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold digital-font text-yellow-400 logo-reflect px-2">
+                        <span class="text-white">B.B</span> JACK'S
+                    </div>
+                    <div class="ml-2 text-xs uppercase tracking-wider text-gray-400">TAXI SERVICE</div>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-en active">Home</a>
+                    <a href="#home" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-es" style="display:none;">Inicio</a>
+                    
+                    <a href="#services" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-en active">Services</a>
+                    <a href="#services" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-es" style="display:none;">Servicios</a>
+                    
+                    <a href="#book" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-en active">Book Ride</a>
+                    <a href="#book" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-es" style="display:none;">Reservar</a>
+                    
+                    <a href="#testimonials" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-en active">Reviews</a>
+                    <a href="#testimonials" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-es" style="display:none;">Reseñas</a>
+                    
+                    <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-en active">Contact</a>
+                    <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 lang-es" style="display:none;">Contacto</a>
+                    
+                    <div class="lang-toggle flex ml-6">
+                        <button id="en-btn" class="lang-btn active">EN</button>
+                        <button id="es-btn" class="lang-btn">ES</button>
+                    </div>
+                    
+                    <a href="#book" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-4 py-2 rounded-full transition duration-300 flex items-center ml-6 hover-glow">
+                        <i class="fas fa-car mr-2"></i> 
+                        <span class="lang-en active btn-text-fixed">BOOK NOW</span>
+                        <span class="lang-es btn-text-fixed" style="display:none;">RESERVAR</span>
+                    </a>
+                </nav>
+                
+                <button class="md:hidden text-gray-300 focus:outline-none" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 md:pt-40 md:pb-32 bg-black overflow-hidden">
+        <div class="moving-line top-1/4"></div>
+        <div class="moving-line top-1/2" style="animation-delay: 2s;"></div>
+        <div class="moving-line top-3/4" style="animation-delay: 4s;"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl">
+                <h1 class="hero-text text-4xl md:text-5xl font-bold mb-6 digital-font">
+                    <span class="text-yellow-400">B.B JACK'S</span> TAXI SERVICE
+                    <span class="block text-white text-2xl md:text-3xl mt-4 font-normal lang-en active" style="font-family: 'Poppins', sans-serif;">"Your ride. Your time. Bound Brook's finest."</span>
+                    <span class="block text-white text-2xl md:text-3xl mt-4 font-normal lang-es" style="font-family: 'Poppins', sans-serif; display:none;">"Tu viaje. Tu tiempo. Lo mejor de Bound Brook."</span>
+                </h1>
+                <p class="text-gray-400 text-lg mb-8 lang-en active">
+                    Premium taxi service available daily from 5:30 a.m. to 2:00 a.m. in Bound Brook and surrounding areas.
+                    We arrive fast, drive safe, and get you to your destination in style.
+                </p>
+                <p class="text-gray-400 text-lg mb-8 lang-es" style="display:none;">
+                    Servicio de taxi premium disponible todos los días de 5:30 a.m. a 2:00 a.m. en Bound Brook y áreas cercanas.
+                    Llegamos rápido, manejamos con seguridad y te llevamos a tu destino con estilo.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#book" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-full transition duration-300 flex items-center hover-glow">
+                        <i class="fas fa-car mr-2"></i> 
+                        <span class="lang-en active btn-text-fixed">BOOK NOW</span>
+                        <span class="lang-es btn-text-fixed" style="display:none;">RESERVAR</span>
+                    </a>
+                    <a href="tel:+17322081066" class="border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold px-6 py-3 rounded-full transition duration-300 flex items-center hover-glow">
+                        <i class="fas fa-phone mr-2"></i> (732) 208-1066
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-0"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 z-0"></div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-20 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 digital-font">
+                    <span class="text-yellow-400 lang-en active">OUR</span>
+                    <span class="text-yellow-400 lang-es" style="display:none;">NUESTROS</span>
+                    <span class="lang-en active">SERVICES</span>
+                    <span class="lang-es" style="display:none;">SERVICIOS</span>
+                </h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto lang-en active">
+                    At B.B Jack's we pride ourselves on offering superior taxi service with professional 
+                    drivers and modern vehicles to ensure your comfort and safety.
+                </p>
+                <p class="text-gray-400 max-w-2xl mx-auto lang-es" style="display:none;">
+                    En B.B Jack's nos enorgullecemos de ofrecer un servicio de taxi superior con conductores 
+                    profesionales y vehículos modernos para garantizar su comodidad y seguridad.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-card p-6 rounded-lg hover-glow hover-blue-glow">
+                    <div class="text-yellow-400 text-3xl mb-4">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 lang-en active">Available daily from 5:30 a.m. to 2:00 a.m.</h3>
+                    <h3 class="text-xl font-bold mb-2 lang-es" style="display:none;">Disponible todos los días de 5:30 a.m. a 2:00 a.m.</h3>
+                    <p class="text-gray-400 lang-en active">
+                        Available daily, 365 days a year, whenever you need us.
+                    </p>
+                    <p class="text-gray-400 lang-es" style="display:none;">
+                        Disponible todos los días, 365 días al año, cuando nos necesite.
+                    </p>
+                </div>
+                
+                <div class="service-card p-6 rounded-lg hover-glow hover-blue-glow">
+                    <div class="text-yellow-400 text-3xl mb-4">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 lang-en active">Airport Pickups</h3>
+                    <h3 class="text-xl font-bold mb-2 lang-es" style="display:none;">Recogidas en aeropuerto</h3>
+                    <p class="text-gray-400 lang-en active">
+                        Reliable transportation to and from all major airports in the region, no matter the time, with a reservation.
+                    <p class="text-gray-400 lang-es" style="display:none;">
+                        Transporte confiable hacia y desde todos los aeropuertos principales de la región, sin importar la hora, con reserva previa.
+                    </p>
+                </div>
+                
+                <div class="service-card p-6 rounded-lg hover-glow hover-blue-glow">
+                    <div class="text-yellow-400 text-3xl mb-4">
+                        <i class="fas fa-taxi"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 lang-en active">Safe & Modern Fleet</h3>
+                    <h3 class="text-xl font-bold mb-2 lang-es" style="display:none;">Flota segura y moderna</h3>
+                    <p class="text-gray-400 lang-en active">
+                        Clean, well-maintained vehicles with the latest safety features.
+                    </p>
+                    <p class="text-gray-400 lang-es" style="display:none;">
+                        Vehículos limpios y bien mantenidos con las últimas características de seguridad.
+                    </p>
+                </div>
+                
+                <div class="service-card p-6 rounded-lg hover-glow hover-blue-glow">
+                    <div class="text-yellow-400 text-3xl mb-4">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 lang-en active">Local & Long-Distance</h3>
+                    <h3 class="text-xl font-bold mb-2 lang-es" style="display:none;">Local y larga distancia</h3>
+                    <p class="text-gray-400 lang-en active">
+                        Whether across town or across state lines, we've got you covered.
+                    </p>
+                    <p class="text-gray-400 lang-es" style="display:none;">
+                        Ya sea dentro de la ciudad o a través de las fronteras estatales, estamos para servirle.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section id="book" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto bg-gray-800 rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-[url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center relative">
+                        <div class="absolute inset-0 bg-yellow-500 opacity-10"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+                        <div class="relative z-10 p-10 h-full flex flex-col justify-center">
+                            <h2 class="text-3xl font-bold mb-4 digital-font text-white">
+                                <span class="lang-en active">BOOK YOUR</span>
+                                <span class="lang-es" style="display:none;">RESERVA TU</span>
+                                <span class="text-yellow-400">RIDE</span>
+                            </h2>
+                            <p class="text-gray-200 mb-6 lang-en active">
+                                Fill out this form and we'll contact you to confirm your ride.
+                            </p>
+                            <p class="text-gray-200 mb-6 lang-es" style="display:none;">
+                                Completa este formulario y nos comunicaremos contigo para confirmar tu viaje.
+                            </p>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone-alt text-yellow-400 mr-3 text-xl"></i>
+                                <div>
+                                    <p class="text-gray-400 text-sm lang-en active">CALL US NOW</p>
+                                    <p class="text-gray-400 text-sm lang-es" style="display:none;">LLÁMANOS AHORA</p>
+                                    <p class="text-white text-xl font-bold">(732) 208-1066</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-10">
+                        <form id="booking-form" class="space-y-6">
+                            <div>
+                                <label class="block text-gray-400 mb-2 lang-en active">Full Name</label>
+                                <label class="block text-gray-400 mb-2 lang-es" style="display:none;">Nombre completo</label>
+                                <input type="text" id="name" class="form-input w-full px-4 py-3 rounded-lg focus:outline-none" placeholder="Your name" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-400 mb-2 lang-en active">Phone Number</label>
+                                <label class="block text-gray-400 mb-2 lang-es" style="display:none;">Número de teléfono</label>
+                                <input type="tel" id="phone" class="form-input w-full px-4 py-3 rounded-lg focus:outline-none" placeholder="(732) 555-1234" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-400 mb-2 lang-en active">Pickup Address</label>
+                                <label class="block text-gray-400 mb-2 lang-es" style="display:none;">Dirección de recogida</label>
+                                <input type="text" id="pickup" class="form-input w-full px-4 py-3 rounded-lg focus:outline-none" placeholder="Exact pickup location" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-400 mb-2 lang-en active">Destination</label>
+                                <label class="block text-gray-400 mb-2 lang-es" style="display:none;">Destino</label>
+                                <input type="text" id="destination" class="form-input w-full px-4 py-3 rounded-lg focus:outline-none" placeholder="Where to?" required>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-400 mb-2 lang-en active">Date</label>
+                                    <label class="block text-gray-400 mb-2 lang-es" style="display:none;">Fecha</label>
+                                    <input type="date" id="date" class="form-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-400 mb-2 lang-en active">Time</label>
+                                    <label class="block text-gray-400 mb-2 lang-es" style="display:none;">Hora</label>
+                                    <input type="time" id="time" class="form-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 px-6 rounded-lg transition duration-300 hover-glow flex items-center justify-center">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                <span class="lang-en active">SEND REQUEST</span>
+                                <span class="lang-es" style="display:none;">ENVIAR SOLICITUD</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 mt-10">
+                <a href="https://wa.me/17322081066" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded-full transition duration-300 flex items-center hover-glow">
+                    <i class="fab fa-whatsapp text-green-400 mr-2 text-xl"></i> WhatsApp
+                </a>
+                <a href="tel:+17322081066" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-3 rounded-full transition duration-300 flex items-center hover-glow">
+                    <i class="fas fa-phone text-yellow-400 mr-2"></i> 
+                    <span class="lang-en active">Call Now</span>
+                    <span class="lang-es" style="display:none;">Llamar ahora</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 digital-font">
+                    <span class="text-yellow-400 lang-en active">CLIENT</span>
+                    <span class="text-yellow-400 lang-es" style="display:none;">CLIENTE</span>
+                    <span class="lang-en active">REVIEWS</span>
+                    <span class="lang-es" style="display:none;">RESEÑAS</span>
+                </h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto lang-en active">
+                    What our clients say about our taxi service in Bound Brook.
+                </p>
+                <p class="text-gray-400 max-w-2xl mx-auto lang-es" style="display:none;">
+                    Lo que dicen nuestros clientes sobre nuestro servicio de taxi en Bound Brook.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card p-8 rounded-lg relative hover-glow">
+                    <div class="text-yellow-400 text-4xl mb-4">"</div>
+                    <p class="text-gray-300 mb-6 lang-en active">
+                        Always arrive on time. The drivers are professional and the cars are spotless. 
+                        My go-to taxi service in Bound Brook.
+                    </p>
+                    <p class="text-gray-300 mb-6 lang-es" style="display:none;">
+                        Siempre llegan a tiempo. Los conductores son profesionales y los autos están impecables.
+                        Mi servicio de taxi preferido en Bound Brook.
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-yellow-400 mr-4">
+                            <i class="fas fa-user text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Jennifer L.</h4>
+                            <p class="text-gray-400 text-sm lang-en active">Regular Client</p>
+                            <p class="text-gray-400 text-sm lang-es" style="display:none;">Cliente regular</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg relative hover-glow">
+                    <div class="text-yellow-400 text-4xl mb-4">"</div>
+                    <p class="text-gray-300 mb-6 lang-en active">
+                        Clean taxi, friendly driver, excellent experience. They picked me up exactly at the agreed time 
+                        and got me to my destination safely.
+                    </p>
+                    <p class="text-gray-300 mb-6 lang-es" style="display:none;">
+                        Taxi limpio, conductor amable, excelente experiencia. Me recogieron exactamente a la hora acordada
+                        y me llevaron a mi destino con seguridad.
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-yellow-400 mr-4">
+                            <i class="fas fa-user text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Mike R.</h4>
+                            <p class="text-gray-400 text-sm lang-en active">First-time rider</p>
+                            <p class="text-gray-400 text-sm lang-es" style="display:none;">Primer viaje</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg relative hover-glow">
+                    <div class="text-yellow-400 text-4xl mb-4">"</div>
+                    <p class="text-gray-300 mb-6 lang-en active">
+                        B.B Jack's is my trusted taxi in Bound Brook. Whenever I need to go to the airport or 
+                        anywhere else, I know I can count on them.
+                    </p>
+                    <p class="text-gray-300 mb-6 lang-es" style="display:none;">
+                        B.B Jack's es mi taxi de confianza en Bound Brook. Cada vez que necesito ir al aeropuerto o
+                        a cualquier otro lugar, sé que puedo contar con ellos.
+                    </p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-yellow-400 mr-4">
+                            <i class="fas fa-user text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Luis C.</h4>
+                            <p class="text-gray-400 text-sm lang-en active">Client since 2022</p>
+                            <p class="text-gray-400 text-sm lang-es" style="display:none;">Cliente desde 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Map -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold mb-4 digital-font">
+                        <span class="text-yellow-400 lang-en active">CONTACT</span>
+                        <span class="text-yellow-400 lang-es" style="display:none;">CONTACTO</span>
+                        <span class="lang-en active">& LOCATION</span>
+                        <span class="lang-es" style="display:none;">Y UBICACIÓN</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
+                    <p class="text-gray-400 max-w-2xl mx-auto lang-en active">
+                        We're available to serve you in Bound Brook and surrounding areas. Contact us to book your ride.
+                    </p>
+                    <p class="text-gray-400 max-w-2xl mx-auto lang-es" style="display:none;">
+                        Estamos disponibles para servirte en Bound Brook y áreas circundantes. Contáctanos para reservar tu viaje.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="bg-gray-800 rounded-xl p-8 mb-8 hover-glow">
+                            <h3 class="text-xl font-bold mb-6 digital-font text-yellow-400 lang-en active">CONTACT INFO</h3>
+                            <h3 class="text-xl font-bold mb-6 digital-font text-yellow-400 lang-es" style="display:none;">INFORMACIÓN DE CONTACTO</h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="text-yellow-400 mr-4 mt-1">
+                                        <i class="fas fa-map-marker-alt text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1 lang-en active">LOCATION</h4>
+                                        <h4 class="font-bold mb-1 lang-es" style="display:none;">UBICACIÓN</h4>
+                                        <p class="text-gray-400">Bound Brook, New Jersey, USA</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="text-yellow-400 mr-4 mt-1">
+                                        <i class="fas fa-phone-alt text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1 lang-en active">PHONE</h4>
+                                        <h4 class="font-bold mb-1 lang-es" style="display:none;">TELÉFONO</h4>
+                                        <p class="text-gray-400">(732) 208-1066</p>
+                                        <p class="text-gray-400 text-sm mt-1 lang-en active">Available 24/7</p>
+                                        <p class="text-gray-400 text-sm mt-1 lang-es" style="display:none;">Disponible 24/7</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="text-yellow-400 mr-4 mt-1">
+                                        <i class="fas fa-envelope text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1 lang-en active">EMAIL</h4>
+                                        <h4 class="font-bold mb-1 lang-es" style="display:none;">CORREO</h4>
+                                        <p class="text-gray-400">contact@bbjackstaxi.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                            <a href="tel:+17322081066" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-full transition duration-300 flex items-center hover-glow">
+                                <i class="fas fa-phone mr-2"></i> 
+                                <span class="lang-en active">CALL NOW</span>
+                                <span class="lang-es" style="display:none;">LLAMAR AHORA</span>
+                            </a>
+                            <a href="https://wa.me/17322081066" class="border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold px-6 py-3 rounded-full transition duration-300 flex items-center hover-glow">
+                                <i class="fab fa-whatsapp mr-2"></i> WHATSAPP
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative rounded-xl overflow-hidden h-96 hover-glow border border-gray-700">
+                        <div class="absolute inset-0 bg-gray-800 opacity-80"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <div class="text-yellow-400 text-5xl mb-4">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2 digital-font">BOUND BROOK, NJ</h3>
+                                <p class="text-gray-400 mb-4 lang-en active">Taxi service available throughout the area</p>
+                                <p class="text-gray-400 mb-4 lang-es" style="display:none;">Servicio de taxi disponible en toda el área</p>
+                                <a href="https://www.google.com/maps/place/B.B+Jack's+Taxi+Service/@40.5624664,-74.5328758,17z/data=!3m1!4b1!4m6!3m5!1s0x89c3bf65be9b0f29:0xe71969e7cbb2a976!8m2!3d40.5624624!4d-74.5303009!16s%2Fg%2F11gf3r1khj?entry=ttu&g_ep=EgoyMDI1MDUxMy4xIKXMDSoASAFQAw%3D%3D" target="_blank" class="inline-block bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-2 rounded-full transition duration-300">
+                                    <span class="lang-en active">OPEN MAP</span>
+                                    <span class="lang-es" style="display:none;">ABRIR MAPA</span>
+                                </a>
+                            </div>
+                        </div>
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193473.0975182295!2d-74.5530205!3d40.6974034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c391c367079765%3A0x4f4b1a5e6fdda15c!2sBound%20Brook%2C%20NJ%2C%20USA!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" 
+                            class="w-full h-full" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center">
+                <div class="text-2xl font-bold digital-font text-yellow-400 mb-4">
+                    <span class="text-white">B.B</span> JACK'S TAXI SERVICE
+                </div>
+                
+                <div class="flex space-x-6 mb-6">
+                    <a href="#" class="text-gray-400 hover:text-yellow-400 transition duration-300">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-400 transition duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-yellow-400 transition duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="text-gray-500 text-center text-sm">
+                    <p class="mb-2">© 2025 B.B JACK'S TAXI SERVICE. All rights reserved.</p>
+                    <p class="lang-en active">"Proudly serving Bound Brook and beyond — one ride at a time."</p>
+                    <p class="lang-es" style="display:none;">"Orgullosamente sirviendo a Bound Brook y más allá — un viaje a la vez."</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        const enBtn = document.getElementById('en-btn');
+        const esBtn = document.getElementById('es-btn');
+        
+        function switchLanguage(lang) {
+            // Hide all language elements
+            document.querySelectorAll('.lang-en, .lang-es').forEach(el => {
+                el.style.display = 'none';
+                el.classList.remove('active');
+            });
+            
+            // Show elements for selected language
+            document.querySelectorAll(`.lang-${lang}`).forEach(el => {
+                el.style.display = 'block';
+                el.classList.add('active');
+            });
+            
+            // Update button states
+            if (lang === 'en') {
+                enBtn.classList.add('active');
+                esBtn.classList.remove('active');
+            } else {
+                esBtn.classList.add('active');
+                enBtn.classList.remove('active');
+            }
+        }
+        
+        enBtn.addEventListener('click', () => {
+            switchLanguage('en');
+        });
+        
+        esBtn.addEventListener('click', () => {
+            switchLanguage('es');
+        });
+        
+        // Booking form submission
+        const bookingForm = document.getElementById('booking-form');
+        
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const pickup = document.getElementById('pickup').value;
+            const destination = document.getElementById('destination').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            // Check current language to format message appropriately
+            const isSpanish = esBtn.classList.contains('active');
+            
+            // Format the WhatsApp message
+            let message;
+            if (isSpanish) {
+                message = `¡Hola! Me gustaría reservar un taxi:\n\nNombre: ${name}\nTeléfono: ${phone}\nRecogida: ${pickup}\nDestino: ${destination}\nHora: ${time} ${date ? 'el ' + date : ''}`;
+            } else {
+                message = `Hello! I'd like to book a taxi:\n\nName: ${name}\nPhone: ${phone}\nPickup: ${pickup}\nDestination: ${destination}\nTime: ${time} ${date ? 'on ' + date : ''}`;
+            }
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Open WhatsApp with pre-filled message
+            window.open(`https://wa.me/17322081066?text=${encodedMessage}`, '_blank');
+            
+            // Reset form
+            bookingForm.reset();
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.createElement('div');
+        mobileMenu.className = 'hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex flex-col items-center justify-center';
+        mobileMenu.innerHTML = `
+            <button class="absolute top-6 right-6 text-white text-2xl" id="close-mobile-menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <nav class="flex flex-col items-center space-y-8">
+                <a href="#home" class="text-white text-2xl hover:text-yellow-400 lang-en active">Home</a>
+                <a href="#home" class="text-white text-2xl hover:text-yellow-400 lang-es" style="display:none;">Inicio</a>
+                
+                <a href="#services" class="text-white text-2xl hover:text-yellow-400 lang-en active">Services</a>
+                <a href="#services" class="text-white text-2xl hover:text-yellow-400 lang-es" style="display:none;">Servicios</a>
+                
+                <a href="#book" class="text-white text-2xl hover:text-yellow-400 lang-en active">Book Ride</a>
+                <a href="#book" class="text-white text-2xl hover:text-yellow-400 lang-es" style="display:none;">Reservar</a>
+                
+                <a href="#testimonials" class="text-white text-2xl hover:text-yellow-400 lang-en active">Reviews</a>
+                <a href="#testimonials" class="text-white text-2xl hover:text-yellow-400 lang-es" style="display:none;">Reseñas</a>
+                
+                <a href="#contact" class="text-white text-2xl hover:text-yellow-400 lang-en active">Contact</a>
+                <a href="#contact" class="text-white text-2xl hover:text-yellow-400 lang-es" style="display:none;">Contacto</a>
+            </nav>
+            <div class="mt-12">
+                <a href="#book" class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-full transition duration-300 flex items-center">
+                    <i class="fas fa-car mr-2"></i> 
+                    <span class="lang-en active btn-text-fixed">BOOK NOW</span>
+                    <span class="lang-es btn-text-fixed" style="display:none;">RESERVAR</span>
+                </a>
+            </div>
+            <div class="lang-toggle flex mt-8">
+                <button id="mobile-en-btn" class="lang-btn active">EN</button>
+                <button id="mobile-es-btn" class="lang-btn">ES</button>
+            </div>
+        `;
+        
+        mobileMenuButton.addEventListener('click', () => {
+            document.body.appendChild(mobileMenu);
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Add event listeners for mobile menu
+            document.getElementById('close-mobile-menu').addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+                setTimeout(() => mobileMenu.remove(), 300);
+            });
+            
+            // Mobile language toggle
+            const mobileEnBtn = document.getElementById('mobile-en-btn');
+            const mobileEsBtn = document.getElementById('mobile-es-btn');
+            
+            mobileEnBtn.addEventListener('click', () => {
+                switchLanguage('en');
+                mobileEnBtn.classList.add('active');
+                mobileEsBtn.classList.remove('active');
+            });
+            
+            mobileEsBtn.addEventListener('click', () => {
+                switchLanguage('es');
+                mobileEsBtn.classList.add('active');
+                mobileEnBtn.classList.remove('active');
+            });
+            
+            // Close menu when clicking on links
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                    setTimeout(() => mobileMenu.remove(), 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
